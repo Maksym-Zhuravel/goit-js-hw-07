@@ -5,6 +5,7 @@ import { galleryItems } from "./gallery-items.js";
 
 const ulItem = document.querySelector(".gallery");
 const galleryMarkup = createGalleryMarkup(galleryItems);
+const modal = document.querySelector('.modal')
 ulItem.insertAdjacentHTML("beforeend", galleryMarkup)
 
 function createGalleryMarkup(galleryItems) {
@@ -19,34 +20,26 @@ function createGalleryMarkup(galleryItems) {
 }
 
 ulItem.addEventListener('click', event => {
-    event.preventDefault()
+  event.preventDefault()
+  
+  onOpenModal(event.target.dataset.source)
 })
 
+function onOpenModal(original) {
+  const instance = basicLightbox.create(`
+    <div class="modal">
+        <img src="${original}"/>
+    </div>
+`)
+
+instance.show()
+}
 
 
 
-// ulItem.addEventListener('click', event => {
-//   event.preventDefault();
-//   if (event.target.tagName !== 'IMG') {
-//     return;
-//   }
-//   onCreateModal(event.target.dataset.source);
-// });
+window.addEventListener('keydown', function (event) {
+  if (event.key === "Escape") {
+   instance.close()
+  }
+})
 
-// function onCreateModal(original) {
-//   const instance = basicLightbox.create(`<div class="modal"><img src="${original}"/></div>`);
-//   instance.show();
-
-//   window.addEventListener('keydown', onEscCloseModal);
-//   function onEscCloseModal(event) {
-//     if (event.code === 'Escape') {
-//       instance.close();
-//     }
-//   }
-
-//   const modal = document.querySelector('.modal');
-//   modal.addEventListener('click', onClickCloseModal);
-//   function onClickCloseModal() {
-//     instance.close();
-//   }
-// }
