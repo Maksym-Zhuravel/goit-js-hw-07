@@ -21,6 +21,10 @@ function createGalleryMarkup(galleryItems) {
 
 ulItem.addEventListener('click', event => {
   event.preventDefault()
+
+  if (event.target.nodeName !== 'IMG') {
+    return
+  }
   
   onOpenModal(event.target.dataset.source)
 })
@@ -32,14 +36,11 @@ function onOpenModal(original) {
     </div>
 `)
 
-instance.show()
-}
-
-
-
-window.addEventListener('keydown', function (event) {
-  if (event.key === "Escape") {
-   instance.close()
+  instance.show()
+  window.addEventListener('keydown', onEscKeyPress)
+  function onEscKeyPress(event) {
+  if (event.code === "Escape"){
+    instance.close()
   }
-})
-
+}
+}
